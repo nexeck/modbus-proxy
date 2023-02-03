@@ -35,9 +35,11 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	serveCmd.Flags().StringP("device", "d", "", "modbus device")
-	serveCmd.Flags().StringP("uri", "u", "", "modbus uri")
-	serveCmd.Flags().IntP("port", "p", 11502, "listening port")
+	serveCmd.Flags().String("device", "", "modbus device")
+	serveCmd.Flags().String("uri", "", "modbus uri")
+	serveCmd.Flags().Int("baudrate", 9600, "baudrate")
+	serveCmd.Flags().String("comset", "8N1", "Comset")
+	serveCmd.Flags().Int("port", 11502, "listening port")
 
 	if err := viper.BindPFlags(serveCmd.Flags()); err != nil {
 		panic(fmt.Errorf("could not bind viper flags"))
@@ -54,8 +56,8 @@ func runServe(cmd *cobra.Command, args []string) {
 	modbusSettings := modbus.Settings{
 		Device:   viper.GetString("device"),
 		URI:      viper.GetString("uri"),
-		Baudrate: 9600,
-		Comset:   "8N1",
+		Baudrate: viper.GetInt("baudrate"),
+		Comset:   viper.GetString("comset"),
 	}
 
 	if err := proxy.StartProxy(viper.GetInt("port"), modbusSettings, false); err != nil {
