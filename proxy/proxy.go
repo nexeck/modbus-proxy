@@ -10,14 +10,33 @@ import (
 	"github.com/evcc-io/evcc/util/modbus"
 )
 
-func StartProxy(port int, config modbus.Settings, readOnly bool) error {
+type Settings struct {
+	ID                  uint8
+	SubDevice           int
+	URI, Device, Comset string
+	Baudrate            int
+	RTU                 *bool // indicates RTU over TCP if true
+	ConnectDelay        time.Duration
+	Delay               time.Duration
+	Timeout             time.Duration
+}
+
+func (s *Settings) String() string {
+	if s.URI != "" {
+		return s.URI
+	}
+	return s.Device
+}
+
+func StartProxy(port int, config Settings, readOnly bool) error {
 	conn, err := modbus.NewConnection(config.URI, config.Device, config.Comset, config.Baudrate, modbus.ProtocolFromRTU(config.RTU), config.ID)
 	if err != nil {
 		return err
 	}
 
-	conn.ConnectDelay(2 * time.Second)
-	conn.Delay(50 * time.Millisecond)
+	conn.ConnectDelay(config.ConnectDelay)
+	conn.Delay(config.Delay)
+	conn.Timeout(config.Timeout)
 
 	h := &handler{
 		log:            util.NewLogger(fmt.Sprintf("proxy-%d", port)),

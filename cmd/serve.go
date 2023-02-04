@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/evcc-io/evcc/util"
-	"github.com/evcc-io/evcc/util/modbus"
 	"github.com/nexeck/modbus-proxy/proxy"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -41,6 +40,10 @@ func init() {
 	serveCmd.Flags().String("comset", "8N1", "Comset")
 	serveCmd.Flags().Int("port", 11502, "listening port")
 
+	serveCmd.Flags().Duration("connect-delay", 0, "initial delay after connecting before starting communication")
+	serveCmd.Flags().Duration("delay", 0, "delay so use between subsequent modbus operations")
+	serveCmd.Flags().Duration("timeout", 1*time.Second, "request timeout")
+
 	if err := viper.BindPFlags(serveCmd.Flags()); err != nil {
 		panic(fmt.Errorf("could not bind viper flags"))
 	}
@@ -53,11 +56,14 @@ func runServe(cmd *cobra.Command, args []string) {
 
 	util.LogLevel("trace", nil)
 
-	modbusSettings := modbus.Settings{
-		Device:   viper.GetString("device"),
-		URI:      viper.GetString("uri"),
-		Baudrate: viper.GetInt("baudrate"),
-		Comset:   viper.GetString("comset"),
+	modbusSettings := proxy.Settings{
+		Device:       viper.GetString("device"),
+		URI:          viper.GetString("uri"),
+		Baudrate:     viper.GetInt("baudrate"),
+		Comset:       viper.GetString("comset"),
+		ConnectDelay: viper.GetDuration("connect-delay"),
+		Delay:        viper.GetDuration("delay"),
+		Timeout:      viper.GetDuration("timeout"),
 	}
 
 	if err := proxy.StartProxy(viper.GetInt("port"), modbusSettings, false); err != nil {
