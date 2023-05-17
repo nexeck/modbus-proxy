@@ -26,19 +26,12 @@ var serveCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(serveCmd)
 
-	// Here you will define your flags and configuration settings.
+	serveCmd.Flags().Int("port", 11502, "listening port")
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// serveCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
 	serveCmd.Flags().String("device", "", "modbus device")
 	serveCmd.Flags().String("uri", "", "modbus uri")
 	serveCmd.Flags().Int("baudrate", 9600, "baudrate")
 	serveCmd.Flags().String("comset", "8N1", "Comset")
-	serveCmd.Flags().Int("port", 11502, "listening port")
 
 	serveCmd.Flags().Duration("connect-delay", 0, "initial delay after connecting before starting communication")
 	serveCmd.Flags().Duration("delay", 0, "delay so use between subsequent modbus operations")
