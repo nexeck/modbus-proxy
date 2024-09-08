@@ -6,7 +6,7 @@ require (
 	github.com/andig/mbserver v0.0.0-20221101171752-364e71b0089c
 	github.com/evcc-io/evcc v0.0.0-20230203165254-ea381b21fc72
 	github.com/grid-x/modbus v0.0.0-20230105075906-8b31e0d1647e
-	github.com/spf13/cobra v1.6.1
+	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.15.0
 )
 
