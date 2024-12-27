@@ -1,6 +1,6 @@
 module github.com/nexeck/modbus-proxy
 
-go 1.20
+go 1.23
 
 require (
 	github.com/andig/mbserver v0.0.0-20221101171752-364e71b0089c
