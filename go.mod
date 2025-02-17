@@ -6,7 +6,7 @@ require (
 	github.com/andig/mbserver v0.0.0-20221101171752-364e71b0089c
 	github.com/evcc-io/evcc v0.0.0-20230203165254-ea381b21fc72
 	github.com/grid-x/modbus v0.0.0-20230105075906-8b31e0d1647e
-	github.com/spf13/cobra v1.8.1
+	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.15.0
 )
 
@@ -31,7 +31,7 @@ require (
 	github.com/spf13/afero v1.9.3 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
-	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/spf13/pflag v1.0.6 // indirect
 	github.com/subosito/gotenv v1.4.2 // indirect
 	github.com/volkszaehler/mbmd v0.0.0-20230202102845-c58e07a6f048 // indirect
 	golang.org/x/crypto v0.17.0 // indirect
